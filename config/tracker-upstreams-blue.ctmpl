@@ -1,0 +1,5 @@
+upstream tracker {
+  {{ range service "tracker_blue-80" "any" }}
+  server {{.Address}}:{{.Port}};
+  {{ end }}
+}

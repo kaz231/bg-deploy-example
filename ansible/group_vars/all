@@ -1,0 +1,8 @@
+debian_version: jessie
+docker_cfg: docker.cfg
+docker_cfg_dest: /etc/default/docker
+registry: 192.168.55.10:5000
+registry_url: 192.168.55.10:5000/
+registry_host_dir: /vagrant/registry
+consul_extra: ""
+ip: "192.168.55.10"

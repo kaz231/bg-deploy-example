@@ -1,0 +1,4 @@
+.vagrant/
+tracker/
+registry/
+ansible/cd.retry

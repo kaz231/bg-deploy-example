@@ -1,0 +1,56 @@
+version: "2"
+
+services:
+  tracker_blue:
+    depends_on:
+      - db
+      - memcached
+    image: kaz231/bg-deploy-tracker:travis-14
+    restart: always
+    ports:
+      - "80"
+    links:
+      - db:db
+      - memcached:memcached
+    volumes:
+      - ./config/parameters.yml:/app/app/config/parameters.yml
+    environment:
+      SERVICE_TAGS: tracker_blue
+      SERVICE_NAME: tracker_blue
+
+  tracker_green:
+    depends_on:
+      - db
+      - memcached
+    image: kaz231/bg-deploy-tracker:travis-13
+    restart: always
+    ports:
+      - "80"
+    links:
+      - db:db
+      - memcached:memcached
+    volumes:
+      - ./config/parameters.yml:/app/app/config/parameters.yml
+    environment:
+      SERVICE_TAGS: tracker_green
+      SERVICE_NAME: tracker_green
+
+  memcached:
+    image: memcached:1.4.33
+
+  db:
+    image: mysql:5.7.16
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret123
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+
+  lb:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./config/tracker.conf:/etc/nginx/conf.d/tracker.conf
+      - ./config/tracker-upstreams.conf:/etc/nginx/conf.d/tracker-upstreams.conf

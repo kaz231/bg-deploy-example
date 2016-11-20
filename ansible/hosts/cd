@@ -1,0 +1,11 @@
+[consul]
+192.168.55.10
+
+[consul:vars]
+consul_extra="-server -bootstrap -ui"
+
+[registrator]
+192.168.55.10
+
+[consul-template]
+192.168.55.10
